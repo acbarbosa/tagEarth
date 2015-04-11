@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from bottle import route, run, template
+from bottle import route, run, template, static_file
 from landsat.search import Search
 from datetime import datetime
 import os, json, random
 
 VIEWS_FOLDER = os.environ.get('TAG_EARTH_VIEWS_FOLDER')
+STYLES_FOLDER = os.environ.get('TAG_EARTH_STYLES_FOLDER')
 
 
 def render_page_with_attributes(page, attributes):
@@ -66,5 +67,10 @@ def index():
     page_model.update({'tags': get_tags()})
     print(page_model)
     return render_page_with_attributes("index.html", page_model)
+
+
+@route('/styles/<filename:re:.*\.css>')
+def send_image(filename):
+    return static_file(filename, root=STYLES_FOLDER, mimetype='text/css')
 
 run(host='localhost', port='8080', reloader=True, debug=True)
