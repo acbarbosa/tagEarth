@@ -36,8 +36,35 @@ def get_random_tile():
     return tiles[0]
 
 
+def get_tags():
+    return [
+        {'name': "Cloudy"}, 
+        {'name': "Desert"},
+        {'name': "fire"},
+        {'name': "fog"},
+        {'name': "geiser"},
+        {'name': "glacier"},
+        {'name': "hill"},
+        {'name': "ice"},
+        {'name': "iceberg"},
+        {'name': "island"},
+        {'name': "lagoon"},
+        {'name': "lake"},
+        {'name': "mountains"},
+        {'name': "ravine"},
+        {'name': "river"},
+        {'name': "sea"},
+        {'name': "urban area"},
+        {'name': "vegetation"},
+        {'name': "volcano"}
+    ]
+
+
 @route('/')
-def index():    
-    return render_page_with_attributes("index.html", get_random_tile())
+def index():
+    page_model = get_random_tile()
+    page_model.update({'tags': get_tags()})
+    print(page_model)
+    return render_page_with_attributes("index.html", page_model)
 
 run(host='localhost', port='8080', reloader=True, debug=True)

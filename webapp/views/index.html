@@ -4,7 +4,16 @@
     </head>
 
     <body>
-        <h1>Path: {{ path }} - Row: {{ row }}</h1>
-        <img src="{{ thumbnail }}">
+        <section class="tile">
+            <img src="{{ thumbnail }}">
+        </section>
+        
+        <section class="tag_selection">
+            <ul>
+            % for tag in tags:
+                <li>{{ tag['name'] }}</li>
+            % end
+            </ul>
+        </section>
     </body>
 </html>
