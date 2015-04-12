@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from bottle import route, run, template, static_file
+from bottle import install, route, run, template, static_file, request
 from landsat.search import Search
 from datetime import datetime
 import os, json, random
+from bottle.ext.mongo import MongoPlugin
+
 
 VIEWS_FOLDER = os.environ.get('TAG_EARTH_VIEWS_FOLDER')
 STYLES_FOLDER = os.environ.get('TAG_EARTH_STYLES_FOLDER')
@@ -37,15 +39,29 @@ def get_random_tile():
     return tiles[0]
 
 
+plugin = MongoPlugin(uri="mongodb://127.0.0.1", db="tagEarth", json_mongo=True)
+install(plugin)
 
 @route('/')
 def index():
     return render_page_with_attributes("index.html", get_random_tile())
 
 
+@route('/submit_tags', method='POST')
+def tag_tile(mongodb):
+    submited_data = json.loads(request.forms.get('submission_data'))
+    submited_data.update({'path': request.forms.get('path')})
+    submited_data.update({'row': request.forms.get('row')})
+    submited_data.update({'sceneID': request.forms.get('sceneID')})
+    submited_data.update({'date': request.forms.get('date')})
+    mongodb['tagged_scenes'].insert(submited_data)
+    return "Thank you!"
+
+
 @route('/styles/<filename:re:.*\.css>')
 def send_css(filename):
     return static_file(filename, root=STYLES_FOLDER, mimetype='text/css')
+
 
 @route('/js/<filename:re:.*\.js>')
 def send_jss(filename):

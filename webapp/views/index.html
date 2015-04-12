@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="/styles/main.css">
         <script src="/js/knockout-3.3.0.js"></script>
+        <script src="/js/underscore-min.js"></script>
         <script src="/js/tag_earth.js" defer="defer"></script>
     </head>
 
@@ -15,6 +16,14 @@
             <ul data-bind="foreach: tags">
                 <li data-bind="text: name, click: toggleSelected, css: { selected: selected }"></li>
             </ul>
+            <form action="/submit_tags" method="post">
+                <input type="hidden" name="submission_data" data-bind="value: ko.toJSON( submissionData() )">
+                <input type="hidden" name="path" value="{{ path }}">
+                <input type="hidden" name="row" value="{{ row }}">
+                <input type="hidden" name="sceneID" value="{{ sceneID }}">
+                <input type="hidden" name="date" value="{{ date }}">
+                <button type="submit">Submit</button>
+            </form>
         </section>
     </body>
 </html>

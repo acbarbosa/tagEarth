@@ -31,6 +31,11 @@ var tags = [
 var TagViewModel = function(tags) {
   this.tags = ko.observableArray(tags);
 };
+TagViewModel.prototype.submissionData = ko.computed (function() {
+  var selectedTags = _.filter(this.tags, function(tag) { return tag.selected(); });
+  return { tags: selectedTags };
+});
+
 
 ko.applyBindings( new TagViewModel(tags) );
 
