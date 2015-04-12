@@ -2,6 +2,8 @@
 <html>
     <head>
         <link rel="stylesheet" href="/styles/main.css">
+        <script src="/js/knockout-3.3.0.js"></script>
+        <script src="/js/tag_earth.js" defer="defer"></script>
     </head>
 
     <body>
@@ -10,10 +12,8 @@
         </section>
         
         <section class="tag_selection">
-            <ul>
-            % for tag in tags:
-                <li>{{ tag['name'] }}</li>
-            % end
+            <ul data-bind="foreach: tags">
+                <li data-bind="text: name, click: toggleSelected, css: { selected: selected }"></li>
             </ul>
         </section>
     </body>

@@ -6,7 +6,7 @@ import os, json, random
 
 VIEWS_FOLDER = os.environ.get('TAG_EARTH_VIEWS_FOLDER')
 STYLES_FOLDER = os.environ.get('TAG_EARTH_STYLES_FOLDER')
-
+JS_FOLDER = os.environ.get('TAG_EARTH_JS_FOLDER')
 
 def render_page_with_attributes(page, attributes):
     return template(os.path.join(VIEWS_FOLDER, page), **attributes)
@@ -37,40 +37,19 @@ def get_random_tile():
     return tiles[0]
 
 
-def get_tags():
-    return [
-        {'name': "Cloudy"}, 
-        {'name': "Desert"},
-        {'name': "fire"},
-        {'name': "fog"},
-        {'name': "geiser"},
-        {'name': "glacier"},
-        {'name': "hill"},
-        {'name': "ice"},
-        {'name': "iceberg"},
-        {'name': "island"},
-        {'name': "lagoon"},
-        {'name': "lake"},
-        {'name': "mountains"},
-        {'name': "ravine"},
-        {'name': "river"},
-        {'name': "sea"},
-        {'name': "urban area"},
-        {'name': "vegetation"},
-        {'name': "volcano"}
-    ]
-
 
 @route('/')
 def index():
-    page_model = get_random_tile()
-    page_model.update({'tags': get_tags()})
-    print(page_model)
-    return render_page_with_attributes("index.html", page_model)
+    return render_page_with_attributes("index.html", get_random_tile())
 
 
 @route('/styles/<filename:re:.*\.css>')
-def send_image(filename):
+def send_css(filename):
     return static_file(filename, root=STYLES_FOLDER, mimetype='text/css')
+
+@route('/js/<filename:re:.*\.js>')
+def send_jss(filename):
+    return static_file(filename, root=JS_FOLDER, mimetype='text/javascript')
+
 
 run(host='localhost', port='8080', reloader=True, debug=True)
