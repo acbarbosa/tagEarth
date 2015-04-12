@@ -20,7 +20,6 @@ var tags = [
    new Tag("lagoon", false),
    new Tag("lake", false),
    new Tag("mountains", false),
-   new Tag("ravine", false),
    new Tag("river", false),
    new Tag("sea", false),
    new Tag("urban area", false),
@@ -38,4 +37,3 @@ TagViewModel.prototype.submissionData = ko.computed (function() {
 
 
 ko.applyBindings( new TagViewModel(tags) );
-

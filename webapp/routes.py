@@ -9,6 +9,7 @@ from bottle.ext.mongo import MongoPlugin
 VIEWS_FOLDER = os.environ.get('TAG_EARTH_VIEWS_FOLDER')
 STYLES_FOLDER = os.environ.get('TAG_EARTH_STYLES_FOLDER')
 JS_FOLDER = os.environ.get('TAG_EARTH_JS_FOLDER')
+IMAGES_FOLDER = os.environ.get('TAG_EARTH_IMAGES_FOLDER')
 
 def render_page_with_attributes(page, attributes):
     return template(os.path.join(VIEWS_FOLDER, page), **attributes)
@@ -67,5 +68,9 @@ def send_css(filename):
 def send_jss(filename):
     return static_file(filename, root=JS_FOLDER, mimetype='text/javascript')
 
+
+@route('/images/<filename:re:.*>')
+def send_image(filename):
+    return static_file(filename, root=IMAGES_FOLDER)
 
 run(host='localhost', port='8080', reloader=True, debug=True)

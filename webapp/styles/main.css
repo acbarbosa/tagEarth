@@ -1,7 +1,47 @@
+.content-wrapper {
+    width: 960px;
+    margin: auto;
+}
+
+header img#logo {
+    width:100px;
+}
+
+header h1 {
+    display: inline;
+    vertical-align: top;
+}
+
+section.tile img {
+    display: block;
+    width: 400px;
+    margin: auto;
+}
+
 section.tag_selection ul {
     list-style: none;
 }
 
-.selected {
-    background-color: #000088;
+
+section.tag_selection li {
+    display: inline-block;
+    width: 100px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 5px 10px;
+    margin: 5px 10px;
+    text-transform: capitalize;
+    border-radius: 10px;
+}
+
+section.tag_selection li.selected {
+    background-color: #00AADD;
+    color: #FFFFFF;
+}
+
+section.tag_selection button {
+    border-radius: 20px;
+    display: block;
+    margin: auto;
+    padding: 5px 20px 5px 20px;
 }

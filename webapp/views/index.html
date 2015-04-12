@@ -8,22 +8,28 @@
     </head>
 
     <body>
-        <section class="tile">
-            <img src="{{ thumbnail }}">
-        </section>
-        
-        <section class="tag_selection">
-            <ul data-bind="foreach: tags">
-                <li data-bind="text: name, click: toggleSelected, css: { selected: selected }"></li>
-            </ul>
-            <form action="/submit_tags" method="post">
-                <input type="hidden" name="submission_data" data-bind="value: ko.toJSON( submissionData() )">
-                <input type="hidden" name="path" value="{{ path }}">
-                <input type="hidden" name="row" value="{{ row }}">
-                <input type="hidden" name="sceneID" value="{{ sceneID }}">
-                <input type="hidden" name="date" value="{{ date }}">
-                <button type="submit">Submit</button>
-            </form>
-        </section>
+        <div class="content-wrapper">
+            <header>
+                <img id="logo" src="/images/logo.jpg">
+                <h1>TagEarth</h1>
+            </header>
+            <section class="tile">
+                <img id="tile" src="{{ thumbnail }}">
+            </section>
+            
+            <section class="tag_selection">
+                <ul data-bind="foreach: tags">
+                    <li data-bind="text: name, click: toggleSelected, css: { selected: selected }"></li>
+                </ul>
+                <form action="/submit_tags" method="post">
+                    <input type="hidden" name="submission_data" data-bind="value: ko.toJSON( submissionData() )">
+                    <input type="hidden" name="path" value="{{ path }}">
+                    <input type="hidden" name="row" value="{{ row }}">
+                    <input type="hidden" name="sceneID" value="{{ sceneID }}">
+                    <input type="hidden" name="date" value="{{ date }}">
+                    <button type="submit">Submit</button>
+                </form>
+            </section>
+        </div>
     </body>
 </html>
