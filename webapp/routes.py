@@ -4,6 +4,7 @@ from landsat.search import Search
 from datetime import datetime
 import os, json, random
 from bottle.ext.mongo import MongoPlugin
+from bson.json_util import dumps
 
 
 VIEWS_FOLDER = os.environ.get('TAG_EARTH_VIEWS_FOLDER')
@@ -55,8 +56,18 @@ def tag_tile(mongodb):
     submited_data.update({'row': request.forms.get('row')})
     submited_data.update({'sceneID': request.forms.get('sceneID')})
     submited_data.update({'date': request.forms.get('date')})
-    mongodb['tagged_scenes'].insert(submited_data)
+    submited_data.update({'thumbnail': request.forms.get('thumbnail')})
+    mongodb['tagged_scenes'].insert_one(submited_data)
     return "Thank you!"
+
+
+@route('/tagged_scenes')
+def list_tagged_scenes(mongodb):
+    search_result = []
+    for item in mongodb['tagged_scenes'].find():
+        print item
+        search_result.append(item)
+    return render_page_with_attributes('list_tagged_scenes.html', {'tagged_scenes': search_result})
 
 
 @route('/styles/<filename:re:.*\.css>')
