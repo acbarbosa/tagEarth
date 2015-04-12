@@ -58,7 +58,7 @@ def tag_tile(mongodb):
     submited_data.update({'date': request.forms.get('date')})
     submited_data.update({'thumbnail': request.forms.get('thumbnail')})
     mongodb['tagged_scenes'].insert_one(submited_data)
-    return "Thank you!"
+    return render_page_with_attributes("submission_response.html", {})
 
 
 @route('/tagged_scenes')
